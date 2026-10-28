@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ReBENCH">
+  <defs>
+    <linearGradient id="rbChip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb0ff"/>
+      <stop offset=".5" stop-color="#4e73df"/>
+      <stop offset="1" stop-color="#224abe"/>
+    </linearGradient>
+    <linearGradient id="rbCore" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2ee6a0"/>
+      <stop offset="1" stop-color="#14a877"/>
+    </linearGradient>
+    <filter id="rbGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- pin kiri & kanan -->
+  <g stroke="#fff" stroke-opacity=".75" stroke-width="2.6" stroke-linecap="round">
+    <line x1="7" y1="22" x2="13" y2="22"/><line x1="7" y1="32" x2="13" y2="32"/><line x1="7" y1="42" x2="13" y2="42"/>
+    <line x1="51" y1="22" x2="57" y2="22"/><line x1="51" y1="32" x2="57" y2="32"/><line x1="51" y1="42" x2="57" y2="42"/>
+  </g>
+  <!-- pin atas & bawah -->
+  <g stroke="#fff" stroke-opacity=".75" stroke-width="2.6" stroke-linecap="round">
+    <line x1="22" y1="7" x2="22" y2="13"/><line x1="32" y1="7" x2="32" y2="13"/><line x1="42" y1="7" x2="42" y2="13"/>
+    <line x1="22" y1="51" x2="22" y2="57"/><line x1="32" y1="51" x2="32" y2="57"/><line x1="42" y1="51" x2="42" y2="57"/>
+  </g>
+
+  <!-- badan chip -->
+  <rect x="12" y="12" width="40" height="40" rx="9" fill="url(#rbChip)"/>
+  <rect x="12" y="12" width="40" height="40" rx="9" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1"/>
+  <rect x="17" y="17" width="30" height="30" rx="5.5" fill="#0f1a3d" fill-opacity=".35"/>
+
+  <!-- inti: garis tren benchmark -->
+  <g filter="url(#rbGlow)">
+    <path d="M22 39 L28.5 32.5 L34 35.5 L42 24" fill="none" stroke="url(#rbCore)" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="42" cy="24" r="3.4" fill="#2ee6a0" stroke="#eafff7" stroke-width="1.6"/>
+  </g>
+</svg>

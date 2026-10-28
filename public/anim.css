@@ -1,0 +1,206 @@
+/* ReBENCH — lapisan animasi & interaksi */
+:root{
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --speed:.42s;
+}
+
+/* ---------- masuk halaman ---------- */
+.view > *{animation:rbRise .55s var(--ease-out) both}
+.view > *:nth-child(2){animation-delay:.05s}
+.view > *:nth-child(3){animation-delay:.1s}
+.view > *:nth-child(4){animation-delay:.15s}
+.view > *:nth-child(5){animation-delay:.2s}
+.view > *:nth-child(n+6){animation-delay:.25s}
+@keyframes rbRise{from{opacity:0;transform:translateY(14px) scale(.995);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+
+/* ---------- sidebar (Mazer: .sidebar-wrapper .menu .sidebar-link) ---------- */
+.sidebar-wrapper .menu .sidebar-link{position:relative;transition:background .3s var(--ease-out),padding-left .3s var(--ease-out),color .2s,box-shadow .3s}
+.sidebar-wrapper .menu .sidebar-link i{transition:transform .4s var(--ease-spring),color .25s}
+.sidebar-wrapper .menu .sidebar-link:hover{padding-left:1.55rem}
+.sidebar-wrapper .menu .sidebar-link:hover i{transform:scale(1.15) rotate(-6deg);color:#435ebe}
+.sidebar-wrapper .menu .sidebar-item.active>.sidebar-link i{transform:scale(1.06)}
+.sidebar-wrapper .menu .sidebar-title{letter-spacing:.05em;text-transform:uppercase;font-size:.68rem!important;color:#9aa7c7!important}
+.sidebar-wrapper{box-shadow:0 0 30px rgba(23,36,89,.05)}
+.sidebar-wrapper .sidebar-header{animation:rbRise .55s var(--ease-out) both}
+.sidebar-wrapper .menu .sidebar-item{animation:rbSlideRight .5s var(--ease-out) both}
+.sidebar-wrapper .menu .sidebar-item:nth-child(2){animation-delay:.03s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(3){animation-delay:.06s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(4){animation-delay:.09s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(5){animation-delay:.12s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(6){animation-delay:.15s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(7){animation-delay:.18s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(8){animation-delay:.21s}
+.sidebar-wrapper .menu .sidebar-item:nth-child(9){animation-delay:.24s}
+@keyframes rbSlideRight{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.sidebar-backdrop{animation:rbFade .3s var(--ease-out) both}
+@keyframes rbFade{from{opacity:0}to{opacity:1}}
+.sidebar-toggler.x i{transition:transform .4s var(--ease-spring)}
+.sidebar-toggler.x:hover i{transform:rotate(90deg)}
+
+/* ---------- logo ReBENCH ---------- */
+.rb-mark{display:grid;place-items:center;flex:0 0 auto;border-radius:50%;transition:transform .5s var(--ease-spring),filter .4s}
+.rb-brand:hover .rb-mark{transform:rotate(-8deg) scale(1.06);filter:drop-shadow(0 4px 10px rgba(67,94,190,.35))}
+.rb-mark svg{overflow:visible}
+/* pin chip berdenyut berurutan = prosesor yang sibuk */
+.rb-pins line{animation:rbPin 2.8s ease-in-out infinite}
+.rb-pins line:nth-child(1){animation-delay:0s}.rb-pins line:nth-child(2){animation-delay:.12s}
+.rb-pins line:nth-child(3){animation-delay:.24s}.rb-pins line:nth-child(4){animation-delay:.36s}
+.rb-pins line:nth-child(5){animation-delay:.48s}.rb-pins line:nth-child(6){animation-delay:.6s}
+.rb-pins line:nth-child(7){animation-delay:.72s}.rb-pins line:nth-child(8){animation-delay:.84s}
+.rb-pins line:nth-child(9){animation-delay:.96s}.rb-pins line:nth-child(10){animation-delay:1.08s}
+@keyframes rbPin{0%,70%,100%{stroke-opacity:.35}18%{stroke-opacity:1}}
+/* garis tren: tergambar dari titik nol lalu titik akhir menyala */
+.rb-trend{stroke-dasharray:40;stroke-dashoffset:40;animation:rbTrace 2.8s var(--ease-out) infinite}
+@keyframes rbTrace{0%{stroke-dashoffset:40}38%{stroke-dashoffset:0}88%,100%{stroke-dashoffset:0}}
+.rb-dot{transform-origin:42px 24px;animation:rbDot 2.8s var(--ease-out) infinite}
+@keyframes rbDot{0%,32%{opacity:0;transform:scale(.2)}44%{opacity:1;transform:scale(1.35)}58%,100%{opacity:1;transform:scale(1)}}
+/* ---------- page heading (pengganti topbar) ---------- */
+.page-heading{position:sticky;top:0;z-index:8;padding:1rem 1.25rem;margin:0 0 1.5rem!important;background:var(--rb-bg,#f6f7fb)}
+.page-heading.scrolled{box-shadow:0 6px 18px rgba(23,36,89,.07);background:var(--rb-bg-scrolled,rgba(246,247,251,.88));backdrop-filter:blur(10px)}
+.page-heading .view-title{animation:rbTitleIn .45s var(--ease-out) both}
+@keyframes rbTitleIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.page-heading .badge.bg-success-subtle{position:relative;overflow:visible}
+.page-heading .badge.bg-success-subtle::after{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(93,218,180,.7);animation:rbPing 2.2s ease-out infinite}
+.view-title{transition:opacity .2s,transform .3s var(--ease-out)}
+.view-title.swap{opacity:0;transform:translateY(-6px)}
+
+/* ---------- kartu ---------- */
+.card{transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out),border-color .3s;will-change:transform}
+.card:hover{transform:translateY(-3px);box-shadow:0 .9rem 2.2rem rgba(58,59,69,.16)!important;border-color:#d6ddf5}
+/* kartu statistik Mazer */
+.stat-card .stats-icon{transition:transform .5s var(--ease-spring),filter .4s,box-shadow .4s;box-shadow:0 6px 14px rgba(23,36,89,.08)}
+.stat-card:hover .stats-icon{transform:scale(1.12) rotate(-6deg);filter:saturate(1.1);box-shadow:0 10px 22px rgba(23,36,89,.16)}
+.stat-card::after{content:"";position:absolute;right:-40px;bottom:-46px;width:130px;height:130px;border-radius:50%;background:rgba(67,94,190,.05);transition:transform .55s var(--ease-out),opacity .4s;pointer-events:none}
+.stat-card:hover::after{transform:scale(1.6);opacity:1}
+.h5,.h3,.h1{transition:color .3s}
+
+/* angka counter */
+.count{font-variant-numeric:tabular-nums;transition:color .3s}
+/* animasi angka: dari 0 ke nilai akhir, dimulai setelah kartu muncul */
+.count{animation:rbCount .8s var(--ease-out) both;animation-delay:.12s}
+@keyframes rbCount{
+  from{opacity:.2;transform:translateY(6px);filter:blur(4px)}
+  to{opacity:1;transform:none;filter:none}
+}
+.count.pulse{animation:rbPulse .65s var(--ease-out)}
+@keyframes rbPulse{0%{transform:scale(1)}35%{transform:scale(1.13);color:#4e73df}100%{transform:scale(1)}}
+
+/* ---------- tombol ---------- */
+.btn{position:relative;overflow:hidden;transition:transform .18s var(--ease-out),box-shadow .25s,background-color .2s,border-color .2s,color .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0) scale(.975)}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 .22rem rgba(78,115,223,.35)}
+.btn::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle at var(--rx,50%) var(--ry,50%),rgba(255,255,255,.55),transparent 45%);
+  opacity:0;transition:opacity .6s;
+}
+.btn.rippling::after{opacity:1;transition:opacity .9s}
+.btn-primary:hover{box-shadow:0 .45rem 1.1rem rgba(78,115,223,.35)}
+.btn-success:hover{box-shadow:0 .45rem 1.1rem rgba(28,200,138,.32)}
+.btn .rb-spin,.rb-spin{display:inline-block;animation:rbSpin .9s linear infinite}
+@keyframes rbSpin{to{transform:rotate(360deg)}}
+.btn.busy{pointer-events:none;opacity:.85}
+
+/* ---------- chip model ---------- */
+.model-chip{
+  position:relative;transform:translateZ(0);
+  transition:transform .22s var(--ease-out),background .2s,border-color .25s,color .2s,box-shadow .25s;
+}
+.model-chip:hover{transform:translateX(3px)}
+.model-chip:active{transform:scale(.98)}
+.model-chip .dot{transition:transform .35s var(--ease-spring),background .25s,box-shadow .3s}
+.model-chip.on{animation:rbChipPop .32s var(--ease-spring)}
+.model-chip.on .dot{background:#4e73df;transform:scale(1.25);box-shadow:0 0 0 3px rgba(78,115,223,.18)}
+@keyframes rbChipPop{0%{transform:scale(1)}45%{transform:scale(1.035)}100%{transform:scale(1)}}
+.model-chip.on::after{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(78,115,223,.45);animation:rbRing .5s var(--ease-out)}
+@keyframes rbRing{from{opacity:.9;transform:scale(.96)}to{opacity:0;transform:scale(1.02)}}
+
+/* ---------- progress ---------- */
+.progress-bar{transition:width .55s var(--ease-out)}
+.progress{box-shadow:inset 0 1px 2px rgba(58,59,69,.08)}
+#progressCard{animation:rbRise .4s var(--ease-out) both}
+.live-log div{animation:rbSlideIn .35s var(--ease-out) both}
+@keyframes rbSlideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+
+/* ---------- tabel ---------- */
+.table tbody tr{transition:background .2s,transform .2s}
+.table-hover tbody tr:hover{background:rgba(78,115,223,.055)!important}
+#boardBody tr{animation:rbRowIn .45s var(--ease-out) both}
+#boardBody tr:nth-child(1){animation-delay:.02s}
+#boardBody tr:nth-child(2){animation-delay:.06s}
+#boardBody tr:nth-child(3){animation-delay:.1s}
+#boardBody tr:nth-child(4){animation-delay:.14s}
+#boardBody tr:nth-child(5){animation-delay:.18s}
+#boardBody tr:nth-child(n+6){animation-delay:.22s}
+@keyframes rbRowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#boardBody tr:nth-child(1) td:first-child{color:#4e73df;font-size:1.05rem}
+.table .badge{transition:transform .25s var(--ease-spring)}
+.table tr:hover .badge{transform:scale(1.08)}
+
+/* ---------- toast ---------- */
+.toast-msg{animation:rbToastIn .45s var(--ease-spring) both;position:relative;overflow:hidden}
+.toast-msg.out{animation:rbToastOut .3s var(--ease-out) forwards}
+.toast-msg::before{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:currentColor;opacity:.35;transform-origin:left;animation:rbDrain 4.2s linear forwards}
+@keyframes rbToastIn{from{opacity:0;transform:translateX(28px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes rbToastOut{to{opacity:0;transform:translateX(28px) scale(.96)}}
+@keyframes rbDrain{to{transform:scaleX(0)}}
+
+/* ---------- tooltip chart ---------- */
+.chart-tip{
+  position:absolute;pointer-events:none;z-index:20;transform:translate(-50%,-120%);
+  background:rgba(90,92,105,.96);color:#fff;padding:.4rem .6rem;border-radius:.35rem;
+  font-size:.72rem;white-space:nowrap;box-shadow:0 .4rem 1rem rgba(0,0,0,.22);
+  opacity:0;transition:opacity .15s,transform .15s var(--ease-out);
+}
+.chart-tip.show{opacity:1;transform:translate(-50%,-135%)}
+.chart-area{cursor:crosshair}
+
+/* ---------- bar animasi ---------- */
+.bar-anim{transform-origin:bottom;animation:rbBarGrow .8s var(--ease-out) both}
+@keyframes rbBarGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+/* ---------- loading skeleton ---------- */
+.skeleton{background:linear-gradient(90deg,#eaecf4 25%,#f4f6fb 50%,#eaecf4 75%);background-size:200% 100%;animation:rbShimmer 1.3s infinite;border-radius:.35rem;color:transparent!important}
+@keyframes rbShimmer{to{background-position:-200% 0}}
+
+/* ---------- badge live ---------- */
+@keyframes rbPing{0%{transform:scale(1);opacity:.85}70%,100%{transform:scale(1.55);opacity:0}}
+
+/* ---------- reduced motion ---------- */
+
+/* ---------- skill ---------- */
+.skill-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.skill{
+  display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:6px;
+  font-size:.68rem;font-weight:700;font-variant-numeric:tabular-nums;
+  border:1px solid transparent;cursor:default;
+  transition:transform .2s var(--ease-spring),box-shadow .2s,background .2s;
+}
+.skill i{font-size:.62rem;opacity:.85}
+.skill:hover{transform:translateY(-2px);box-shadow:0 .25rem .6rem rgba(58,59,69,.16);z-index:2}
+.s-high{background:rgba(28,200,138,.14);color:#12855c;border-color:rgba(28,200,138,.4)}
+.s-mid{background:rgba(54,185,204,.14);color:#1a7f8c;border-color:rgba(54,185,204,.4)}
+.s-low{background:rgba(246,194,62,.16);color:#9a7211;border-color:rgba(246,194,62,.45)}
+.s-none{background:rgba(231,74,59,.12);color:#b53a2d;border-color:rgba(231,74,59,.35)}
+.skill-total{
+  margin-left:auto;padding:2px 8px;border-radius:999px;font-size:.7rem;font-weight:800;
+  background:#5a5c69;color:#fff;
+}
+.skill-total.s-high{background:#1cc88a;color:#fff}
+.skill-total.s-mid{background:#36b9cc;color:#fff}
+.skill-total.s-low{background:#f6c23e;color:#5a3f00}
+.skill-run{white-space:nowrap}
+.skill-card{
+  border:1px solid #e3e6f0;border-radius:.35rem;padding:.6rem .7rem;text-align:center;
+  transition:transform .3s var(--ease-out),box-shadow .3s,border-color .3s;
+}
+.skill-card:hover{transform:translateY(-3px);box-shadow:0 .7rem 1.6rem rgba(58,59,69,.14);border-color:#c7d3f7}
+.skill-card-icon{font-size:1.05rem;color:#4e73df;margin-bottom:.25rem}
+.skill-card-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#858796;font-weight:700}
+.skill-card-val{font-size:1.5rem;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums}
+.skill-card-model{font-size:.66rem;color:#b7b9cc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}

@@ -1,0 +1,17 @@
+{
+  "name": "rebenth",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ReBENCH — model benchmark â€” dashboard SB Admin 2 untuk mengukur kecepatan model AI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
+
+

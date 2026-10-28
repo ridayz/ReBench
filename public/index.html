@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ReBENCH - Model Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="logo-mark.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="vendor/mazer/app.css" />
+<link rel="stylesheet" href="vendor/mazer/app-dark.css" />
+<link rel="stylesheet" href="vendor/mazer/bootstrap-icons.css" />
+<link rel="stylesheet" href="rebenth.css" />
+<link rel="stylesheet" href="anim.css" />
+<script>
+  // pasang tema sebelum paint pertama supaya tidak ada kedip putih
+  (function () {
+    try {
+      var saved = localStorage.getItem("rebenth-theme");
+      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-bs-theme", dark ? "dark" : "light");
+    } catch (e) {
+      document.documentElement.setAttribute("data-bs-theme", "light");
+    }
+  })();
+</script>
+</head>
+<body>
+<div id="app">
+  <div id="sidebar">
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header position-relative">
+        <a href="#" class="rb-brand">
+          <span class="rb-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="34" height="34">
+              <defs>
+                <linearGradient id="rbChip" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#8fb0ff"/><stop offset=".5" stop-color="#435ebe"/><stop offset="1" stop-color="#25396f"/>
+                </linearGradient>
+                <linearGradient id="rbCore" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#5ddab4"/><stop offset="1" stop-color="#12855c"/>
+                </linearGradient>
+                <filter id="rbGlow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feGaussianBlur stdDeviation="1.6" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <g class="rb-pins" stroke="#435ebe" stroke-opacity=".65" stroke-width="2.6" stroke-linecap="round">
+                <line x1="7" y1="22" x2="13" y2="22"/><line x1="7" y1="32" x2="13" y2="32"/><line x1="7" y1="42" x2="13" y2="42"/>
+                <line x1="51" y1="22" x2="57" y2="22"/><line x1="51" y1="32" x2="57" y2="32"/><line x1="51" y1="42" x2="57" y2="42"/>
+                <line x1="22" y1="7" x2="22" y2="13"/><line x1="32" y1="7" x2="32" y2="13"/><line x1="42" y1="7" x2="42" y2="13"/>
+                <line x1="22" y1="51" x2="22" y2="57"/><line x1="32" y1="51" x2="32" y2="57"/><line x1="42" y1="51" x2="42" y2="57"/>
+              </g>
+              <rect x="12" y="12" width="40" height="40" rx="9" fill="url(#rbChip)"/>
+              <rect x="12" y="12" width="40" height="40" rx="9" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1"/>
+              <rect x="17" y="17" width="30" height="30" rx="5.5" fill="#0f1a3d" fill-opacity=".35"/>
+              <g filter="url(#rbGlow)">
+                <path class="rb-trend" d="M22 39 L28.5 32.5 L34 35.5 L42 24" fill="none" stroke="url(#rbCore)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle class="rb-dot" cx="42" cy="24" r="3.4" fill="#5ddab4" stroke="#eafff7" stroke-width="1.6"/>
+              </g>
+            </svg>
+          </span>
+          <span class="rb-brand-text">Re<span>BENCH</span></span>
+        </a>
+        <button class="sidebar-toggler x" id="sidebarClose"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <ul class="menu" id="sidebarMenu">
+        <li class="sidebar-title">Menu</li>
+        <li class="sidebar-item active">
+          <a href="#" class="sidebar-link" data-view="dash"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        </li>
+        <li class="sidebar-title">Benchmark</li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-view="run"><i class="bi bi-play-fill"></i><span>Jalankan Test</span></a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-view="results"><i class="bi bi-table"></i><span>Hasil</span></a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-view="probe"><i class="bi bi-clipboard-pulse"></i><span>Cek Kemampuan</span></a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-view="history"><i class="bi bi-clock-history"></i><span>Riwayat</span></a>
+        </li>
+        <li class="sidebar-title">Sumber</li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" data-view="settings"><i class="bi bi-plug"></i><span>Provider &amp; API Key</span></a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center gap-2 mb-1" id="connTxt"><span class="bi bi-circle-fill text-success" style="font-size:.5rem"></span> Endpoint siap</div>
+        <div class="mono-sm text-truncate" id="endpointTxt">memuat endpoint...</div>
+      </div>
+    </div>
+  </div>
+  <div id="main">
+    <header class="mb-3">
+      <a href="#" class="burger-btn d-block d-xl-none" id="burgerBtn"><i class="bi bi-justify fs-3"></i></a>
+    </header>
+    <div class="page-heading d-flex align-items-center justify-content-between flex-wrap gap-2 px-3">
+      <h3 class="view-title mb-0">Dashboard</h3>
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-success-subtle text-success px-3 py-2 fw-bold">LIVE</span>
+        <span class="small muted mono d-none d-lg-inline" id="footEndpoint"></span>
+        <button class="rb-theme" id="themeToggle" type="button" aria-label="Ganti mode terang / gelap" title="Mode gelap (tekan D)">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+      </div>
+    </div>
+    <div class="page-content px-3">
+        <!-- ============ DASHBOARD ============ -->
+        <section class="view" id="v-dash">
+          <p class="small muted">Kecepatan dan kemampuan model, diukur langsung dari endpoint kamu.</p>
+          <button class="btn btn-primary mb-4" id="quickRun">
+            <i class="bi bi-lightning-charge me-1"></i> Test Cepat (5 model tercepat)
+          </button>
+
+          <div class="row" id="cards"></div>
+
+          <div class="row">
+            <div class="col-xl-7 col-lg-7">
+              <div class="card shadow mb-4">
+                <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="mb-0">Latensi per Model <span class="muted small">(median, ms - makin pendek makin baik)</span></h6>
+                </div>
+                <div class="card-body"><div id="barWrap" class="chart-area"><canvas id="barChart"></canvas></div></div>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-5">
+              <div class="card shadow mb-4">
+                <div class="card-header"><h6 class="mb-0">Komposisi Status</h6></div>
+                <div class="card-body">
+                  <div class="chart-pie pt-4"><canvas id="donutChart"></canvas></div>
+                  <div class="mt-3 text-center small" id="donutLegend"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-4">
+            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+              <h6 class="mb-0">Skill Juara <span class="muted small">(skor 0-100 per kemampuan)</span></h6>
+              <span class="small muted">dari tes aktual, bukan nama model</span>
+            </div>
+            <div class="card-body" id="skillSummary">
+              <p class="small muted mb-0">
+                Skill muncul setelah <b>Cek Kemampuan</b> dijalankan. Klik tombol <b>Cek skill</b> di baris model, atau pilih beberapa model di menu itu.
+              </p>
+            </div>
+          </div>
+
+          <div class="card shadow mb-4">
+            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+              <h6 class="mb-0">Leaderboard</h6>
+              <span class="small muted" id="lastRunTxt">belum ada test</span>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle" id="boardTable">
+                  <thead>
+                    <tr>
+                      <th>#</th><th>Model</th><th>Sukses</th><th>Median</th>
+                      <th>TTFT</th><th>Tok/s</th><th>Min / Maks</th><th>Skill</th><th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="boardBody">
+                    <tr><td colspan="9" class="text-center muted py-4">Klik <b>Test Cepat</b> di header, atau buka menu <b>Jalankan Test</b>.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ RUN ============ -->
+        <section class="view" id="v-run" hidden>
+          <p class="small muted">Pilih model, atur prompt, lalu jalankan. Hasil masuk ke leaderboard secara langsung.</p>
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card shadow mb-4">
+                <div class="card-header"><h6 class="mb-0">Pengaturan</h6></div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label">Prompt</label>
+                    <textarea class="form-control" id="promptInput" rows="5"></textarea>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <label class="form-label">Max token</label>
+                      <input type="number" class="form-control" id="maxTokensInput" min="16" max="2048" step="16" />
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label class="form-label">Run per model</label>
+                      <input type="number" class="form-control" id="runsInput" min="1" max="5" />
+                    </div>
+                  </div>
+                  <button class="btn btn-primary w-100" id="runBtn">
+                      <i class="bi bi-play-fill me-1"></i> Mulai Benchmark
+                  </button>
+                  <button class="btn btn-outline-secondary w-100 btn-sm" id="selectFast">Pilih 5 tercepat</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Model (<span id="modelCount">0</span> tersedia)</h6>
+                  <div>
+                    <button class="btn btn-sm btn-outline-primary" id="selAll">Semua</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="selNone">Kosongkan</button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text bg-transparent"><i class="bi bi-search"></i></span>
+                    <input class="form-control" id="modelFilter" placeholder="Filter model..." />
+                  </div>
+                  <div class="row" id="modelList"></div>
+                </div>
+              </div>
+              <div class="card shadow mb-4" id="progressCard" hidden>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Progress</h6>
+                  <span class="small muted" id="progressTxt">0 / 0</span>
+                </div>
+                <div class="card-body">
+                  <div class="progress mb-3" style="height: 12px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" id="progressBar" style="width:0%"></div>
+                  </div>
+                  <div class="live-log" id="liveLog"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ RESULTS ============ -->
+        <section class="view" id="v-results" hidden>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="small muted mb-0">Data mentah tiap request.</p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-secondary" id="copyCsv"><i class="bi bi-clipboard me-1"></i> Copy CSV</button>
+              <button class="btn btn-sm btn-success" id="dlJson"><i class="bi bi-download me-1"></i> Unduh JSON</button>
+            </div>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-sm align-middle" id="rawTable">
+                  <thead>
+                    <tr><th>Model</th><th>Run</th><th>Status</th><th>TTFT</th><th>Total</th><th>Tok out</th><th>Preview</th></tr>
+                  </thead>
+                  <tbody id="rawBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ HISTORY ============ -->
+        <!-- ============ CEK KEMAMPUAN ============ -->
+        <section class="view" id="v-probe" hidden>
+          <div class="d-sm-flex align-items-center justify-content-between mb-3 gap-2">
+            <p class="small muted mb-0">9 tes aktual: instruksi, matematika, JSON, coding, konteks panjang, routing, vision, konsistensi.</p>
+            <button class="btn btn-primary btn-sm" id="probeRun"><i class="bi bi-clipboard-pulse me-1"></i> Cek model terpilih</button>
+          </div>
+          <div class="row" id="probeCards"></div>
+          <div class="row" id="probeDetails"></div>
+          <div class="card shadow mb-4" id="probeEmpty">
+            <div class="card-body text-center py-5">
+              <i class="bi bi-clipboard-pulse display-5 muted d-block mb-3"></i>
+              <p class="mb-1">Belum ada hasil uji kemampuan.</p>
+              <p class="small muted mb-0">Pilih model di menu <b>Jalankan Test</b>, lalu tekan <b>Cek model terpilih</b>.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ SETTINGS ============ -->
+        <section class="view" id="v-settings" hidden>
+          <p class="small muted">Endpoint OpenAI-compatible. Key disimpan lokal di config.json.</p>
+          <div class="row">
+            <div class="col-lg-7">
+              <div class="card shadow mb-4">
+                <div class="card-header"><h6 class="mb-0">Sumber Model</h6></div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label">Base URL (OpenAI-compatible)</label>
+                    <input class="form-control mono" id="cfgBase" placeholder="https://provider-kamu.com/v1" />
+                    <small class="form-text muted">Harus diakhiri <span class="mono">/v1</span>. Endpoint dibaca otomatis dari <span class="mono">/models</span>.</small>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">API Key</label>
+                    <input class="form-control mono" id="cfgKey" type="password" placeholder="sk-..." />
+                    <small class="form-text muted" id="cfgKeyHint">Key tersimpan lokal di config.json dan hanya dikirim ke base URL di atas.</small>
+                  </div>
+                  <button class="btn btn-primary" id="cfgSave"><i class="bi bi-plug me-1"></i> Simpan &amp; Uji Koneksi</button>
+                  <span class="small ml-2" id="cfgMsg"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="card shadow mb-4">
+                <div class="card-header"><h6 class="mb-0">Default Benchmark</h6></div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label">Prompt</label>
+                    <textarea class="form-control" id="cfgPrompt" rows="4"></textarea>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <label class="form-label">Max token</label>
+                      <input type="number" class="form-control" id="cfgMaxTokens" min="16" max="4096" />
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label class="form-label">Run / model</label>
+                      <input type="number" class="form-control" id="cfgRuns" min="1" max="5" />
+                    </div>
+                  </div>
+                  <button class="btn btn-success" id="cfgSaveBench"><i class="bi bi-save me-1"></i> Simpan default</button>
+                  <button class="btn btn-outline-secondary" id="cfgReload"><i class="bi bi-arrow-clockwise me-1"></i> Muat ulang model</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="view" id="v-history" hidden>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            
+            <button class="btn btn-sm btn-outline-danger" id="clearHistory"><i class="bi bi-trash me-1"></i> Hapus riwayat</button>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-body" id="historyBody"><p class="muted">Memuat...</p></div>
+          </div>
+        </section>
+      </div>
+    <footer class="text-center py-4 small muted">
+      ReBENCH &copy; 2026 - tema Mazer - data dari <span class="mono" id="footEndpoint"></span>
+    </footer>
+  </div>
+</div>
+<div class="toast-stack" id="toastStack"></div>
+<script src="app.js"></script>
+</body>
+</html>
