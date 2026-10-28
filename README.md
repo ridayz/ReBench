@@ -1,6 +1,10 @@
 # ReBENCH
 
-Dashboard SB Admin 2 untuk mengukur model AI secara aktual: mana yang cepat, mana yang benar-benar bisa coding/JSON/vision.
+![Tampilan ReBENCH mode gelap](screenshot.png)
+
+Benchmark model AI dari endpoint provider kamu sendiri: ukur kecepatan (TTFT, latensi total, token/detik) sekaligus kemampuan nyata (pintar, koding, vision, texting, reasoning, solusi).
+
+Dashboard untuk mengukur model AI secara aktual: mana yang cepat, mana yang benar-benar bisa coding/JSON/vision.
 
 ## Fitur visual
 
